@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecoveryGuard Member Check-In</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #1f2d3d;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 30px 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      color: #4b5b6b;
+    }
+
+    #wheelArea {
+      margin: 25px 0;
+    }
+
+    .spinner {
+      width: 180px;
+      height: 180px;
+      border: 10px solid #d9e2ec;
+      border-top: 10px solid #2a5d9f;
+      border-radius: 50%;
+      margin: 0 auto 20px auto;
+      transition: transform 3s ease-out;
+    }
+
+    button {
+      background: #2a5d9f;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.92;
+    }
+
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 25px;
+    }
+
+    #log {
+      text-align: left;
+      margin-top: 30px;
+      background: #f8fafc;
+      padding: 18px;
+      border-radius: 12px;
+    }
+
+    #log h3 {
+      margin-top: 0;
+    }
+
+    #logList {
+      padding-left: 20px;
+    }
+
+    .selected {
+      color: #b42318;
+    }
+
+    .not-selected {
+      color: #027a48;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Member Daily Check-In</h1>
+    <p>Complete your daily accountability spin below.</p>
+
+    <div id="wheelArea">
+      <div class="spinner" id="spinner"></div>
+      <button onclick="spinWheel()">Spin</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div id="log">
+      <h3>Check-In Log</h3>
+      <ul id="logList"></ul>
+    </div>
+  </div>
+
+  <script>
+    function spinWheel() {
+      const spinner = document.getElementById("spinner");
+      const result = document.getElementById("result");
+      const logList = document.getElementById("logList");
+
+      const degrees = 1800 + Math.floor(Math.random() * 1440);
+      spinner.style.transform = `rotate(${degrees}deg)`;
+
+      setTimeout(() => {
+        const selected = Math.random() < 0.2; // 20% chance
+        const now = new Date();
+        const timeStamp = now.toLocaleString();
+
+        if (selected) {
+          result.textContent = "SELECTED";
+          result.className = "selected";
+        } else {
+          result.textContent = "NOT SELECTED";
+          result.className = "not-selected";
+        }
+
+        const li = document.createElement("li");
+        li.textContent = `${timeStamp} — ${selected ? "SELECTED" : "NOT SELECTED"}`;
+        logList.prepend(li);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
